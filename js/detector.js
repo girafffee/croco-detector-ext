@@ -18,15 +18,15 @@ function get_wp_json(ajax_url) {
 chrome.runtime.sendMessage({
     from: 'content',
     subject: 'showPageAction',
-  });
+});
   
   // Listen for messages from the popup.
-  chrome.runtime.onMessage.addListener( (msg, sender, response) => {
+chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
-      // Collect the necessary data. 
-      // (For your specific requirements `document.querySelectorAll(...)`
-      //  should be equivalent to jquery's `$(...)`.)
+		// Collect the necessary data. 
+		// (For your specific requirements `document.querySelectorAll(...)`
+		//  should be equivalent to jquery's `$(...)`.)
         var domInfo = {
             total: document.querySelectorAll('*').length,
             inputs: document.querySelectorAll('input').length,
@@ -35,11 +35,11 @@ chrome.runtime.sendMessage({
         };
         domInfo.namespaces = get_wp_json(domInfo.json_api_url);
 
-      // Directly respond to the sender (popup), 
-      // through the specified callback.
+		// Directly respond to the sender (popup), 
+		// through the specified callback.
         response(domInfo);
     }
-  });
+});
 
 
 
