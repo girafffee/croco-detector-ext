@@ -1,27 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script type="text/javascript" src="js/popup.js"></script>
-  </head>
-  <body>
-    <h3 style="font-weight:bold; text-align:center;">DOM Info</h3>
-    <table border="1" cellpadding="3" style="border-collapse:collapse;">
-      <tr>
-        <td nowrap>Total number of elements:</td>
-        <td align="right"><span id="total">N/A</span></td>
-      </tr>
-      <tr>
-        <td nowrap>Number of input elements:</td>
-        <td align="right"><span id="inputs">N/A</span></td>
-      </tr>
-      <tr>
-        <td nowrap>Number of button elements:</td>
-        <td align="right"><span id="buttons">N/A</span></td>
-      </tr>
-      <tr>
-        <td nowrap>Plugins</td>
-        <td align="right"><span id="request-url">N/A</span></td>
-      </tr>
-    </table>
-  </body>
+<head>
+	<meta charset="utf-8">
+	<title>Crocoblock Detector</title>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="fontawesome\css\all.min.css">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html,
+		body {
+			font-family: 'Montserrat', sans-serif;
+			font-size: 14px;
+			width: 480px;
+		}
+		.crocdec-container {
+			padding: 8px;
+		}
+		.crocdec-container div {
+			padding: 10px;
+		}
+		.crocdec-header {
+			border-bottom: 1px solid #cccccc;
+		}
+		.crocdec-footer {
+			border-top: 1px solid #cccccc;
+		}
+		.crocdec-footer i {
+			font-size: 28px;
+			color: indigo;
+			transition: 0.1s ease-in-out;
+		}
+		.crocdec-footer i:hover {
+			color: lightseagreen;
+		}
+
+		.crocodec-plugin-item {
+			display: flex;
+		}
+		.crocodec-plugin-item .crocodec-plugin-title {
+			font-size: 15px;
+		}
+		.crocodec-plugin-item .crocodec-plugin-description {
+			font-size: 11px;
+		}
+	</style>
+	<script src="js/jquery-3.5.1.min.js"></script>
+	<script src="js/popup.js"></script>
+</head>
+<body>
+	<section class="crocdec-container">
+		<div class="crocdec-header">
+			<h3 class="crocdec-title">Crocoblock Detector</h3>
+		</div>
+		<div class="crocdec-table-content">
+			<div class="crocodec-plugin-item">
+				<div class="crocodec-col">
+					<img src="cropped-fav-180x180.png" alt="logo" width="32" height="32"/>
+				</div>
+				<div class="crocodec-col">
+					<p class="crocodec-plugin-title">Title</p>
+					<p class="crocodec-plugin-description">Description Description</p>
+				</div>
+			</div>
+		</div>
+		<div class="crocdec-footer">
+			<i class="fas fa-cog"></i>
+		</div>
+	</section>
+
+</body>
 </html>
