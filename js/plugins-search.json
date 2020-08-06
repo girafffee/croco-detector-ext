@@ -8,7 +8,7 @@
     },
     {
         "name": "jet-engine",
-        "label": "Jetngine",
+        "label": "JetEngine",
         "logo_type": "file",
         "logo_name": "jetengine-logo.png",
         "description": "Everything for dynamic content"
@@ -17,14 +17,42 @@
         "name": "jet-tricks",
         "label": "JetTricks",
         "logo_type": "file",
-        "logo_name": "jettricks.png"
+        "logo_name": "jettricks.png",
+        "description": "Eye-candy visual effects"
     },
     {
         "name": "jet-elements",
         "label": "JetElements",
         "logo_type": "file",
-        "logo_name": "jetelements-logo.png"
-    }
-
-    
+        "logo_name": "jetelements-logo.png",
+        "description": "Meet the basic must-have widgets"
+    },
+    {
+        "name": "jet-tabs",
+        "label": "JetTabs",
+        "logo_type": "file",
+        "logo_name": "jettabs.svg",
+        "description": "Dynamic tabs, toggles & accordions"
+    },
+    {
+        "name": "jet-blog",
+        "label": "JetBlog",
+        "logo_type": "file",
+        "logo_name": "jetblog.svg",
+        "description": "Dynamic blogging widgets"
+    },
+    {
+        "name": "jet-woobuilder",
+        "label": "JetWooBuilder",
+        "logo_type": "file",
+        "logo_name": "jetwoobuilder.svg",
+        "description": "Everything for WooCommerce"
+    },
+    {
+        "name": "jet-woobuilder",
+        "label": "JetWooBuilder",
+        "logo_type": "file",
+        "logo_name": "jetwoobuilder.svg",
+        "description": "Everything for WooCommerce"
+    }    
 ]

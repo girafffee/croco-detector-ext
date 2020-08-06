@@ -10,8 +10,8 @@
 	"content_scripts": [{
 		"matches": ["<all_urls>"],
 		"js": [
-			  "js/detector.js",
-			  "js/jquery-3.5.1.min.js"
+			"js/jquery-3.5.1.min.js",
+			"js/detector.js"
 		]
 	}],
 	"icons": {

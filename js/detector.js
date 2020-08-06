@@ -2,11 +2,17 @@
 // this tab should have a page-action.
 function get_namespaces(ajax_url) { 
     let namespaces;
+
     $.ajax({
         url: ajax_url,
         async: false,
+        dataType: 'json',
+       
         success: function( data ) {	
             namespaces = data.namespaces;
+        },
+        error: function ( data ) {
+            console.log( data );
         }
     });
     return namespaces;
@@ -27,7 +33,7 @@ chrome.runtime.onMessage.addListener( (msg, sender, response) => {
 
 		// Directly respond to the sender (popup), 
         // through the specified callback.
-        console.log( plugins );
+        
         response( plugins );
     }
 });
