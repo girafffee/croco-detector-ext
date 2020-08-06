@@ -1,0 +1,30 @@
+[
+    {
+        "name": "jet-menu",
+        "label": "JetMenu",
+        "logo_type": "file",
+        "logo_name": "jetmenu.png",
+        "description": "Build your custom mega menu"
+    },
+    {
+        "name": "jet-engine",
+        "label": "Jetngine",
+        "logo_type": "file",
+        "logo_name": "jetengine-logo.png",
+        "description": "Everything for dynamic content"
+    },
+    {
+        "name": "jet-tricks",
+        "label": "JetTricks",
+        "logo_type": "file",
+        "logo_name": "jettricks.png"
+    },
+    {
+        "name": "jet-elements",
+        "label": "JetElements",
+        "logo_type": "file",
+        "logo_name": "jetelements-logo.png"
+    }
+
+    
+]

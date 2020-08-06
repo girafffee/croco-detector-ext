@@ -1,9 +1,7 @@
 // Update the relevant fields with the new data.
-const setDOMInfo = info => {
-    document.getElementById('total').textContent = info.total;
-    document.getElementById('inputs').textContent = info.inputs;
-    document.getElementById('buttons').textContent = info.buttons;
-    document.getElementById('request-url').textContent = info.namespaces;
+const LOGOS_PATH = '/logos/';
+const setDOMInfo = plugins => {
+    document.getElementById('request-url').textContent = plugins;
   };
   
   // Once the DOM is ready...
