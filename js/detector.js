@@ -1,20 +1,33 @@
 // Inform the background page that 
 // this tab should have a page-action.
-function get_namespaces(ajax_url) { 
-    let namespaces;
+async function get_namespaces(ajax_url) { 
+    let response, json, namespaces;
 
-    $.ajax({
-        url: ajax_url,
-        async: false,
-        dataType: 'json',
-       
-        success: function( data ) {	
-            namespaces = data.namespaces;
-        },
-        error: function ( data ) {
-            console.log( data );
-        }
-    });
+    // $.ajax({
+    //     url: ajax_url,
+    //     dataType: 'json',
+    //     async: false
+    // }).done( function( data ) {
+    //     namespaces = data.namespaces;
+    // }).fail( function() {
+    //     console.log( "error" );
+    // });
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET", ajax_url, false); // async=true
+    // xhr.onload = function (e) {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //         console.log(xhr.responseText);
+    //     }
+    // };
+    // xhr.send(null);
+
+    // await fetch(ajax_url, { credentials: 'include', mode: 'cors' })
+    //     .then(response => response.json())
+    //     .then(json => { return json.namespaces } );
+        
+    /* зараза хром все блокирует(((((((( */ 
+
     return namespaces;
 }
 
