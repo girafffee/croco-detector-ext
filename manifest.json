@@ -22,5 +22,10 @@
 		"default_icon": "cropped-fav-32x32.png",
 		"default_popup": "popup.html"
 	},
-	"permissions": ["storage", "activeTab", "tabs"]	
+	"permissions": [
+		"storage", 
+		"activeTab", 
+		"tabs", 
+		"*://*/*"
+	]	
 }

@@ -1,34 +1,38 @@
 // Inform the background page that 
 // this tab should have a page-action.
-async function get_namespaces(ajax_url) { 
-    let response, json, namespaces;
+function get_namespaces(ajax_url) { 
 
-    // $.ajax({
-    //     url: ajax_url,
-    //     dataType: 'json',
-    //     async: false
-    // }).done( function( data ) {
-    //     namespaces = data.namespaces;
-    // }).fail( function() {
-    //     console.log( "error" );
-    // });
+    let namespaces;
+    $.ajax({
+        url: ajax_url,
+        dataType: 'json',
+        async: false
+    }).done( function( data ) {
+        namespaces =  data.namespaces;
+    }).fail( function() {
+        console.log( "error" );
+    });
 
     // var xhr = new XMLHttpRequest();
     // xhr.open("GET", ajax_url, false); // async=true
     // xhr.onload = function (e) {
     //     if (xhr.readyState == 4 && xhr.status == 200) {
-    //         console.log(xhr.responseText);
+    //         namespaces = JSON.parse(xhr.responseText).namespaces;
     //     }
     // };
     // xhr.send(null);
 
-    // await fetch(ajax_url, { credentials: 'include', mode: 'cors' })
+    // return await fetch(ajax_url, { credentials: 'include', mode: 'cors' })
     //     .then(response => response.json())
-    //     .then(json => { return json.namespaces } );
-        
-    /* зараза хром все блокирует(((((((( */ 
+    //     .then(json => { 
+    //         return json.namespaces; } );
 
+    // let response = await fetch(ajax_url);
+
+    // let json = response.json(); // читаем ответ в формате JSON
+    
     return namespaces;
+    /* зараза хром все блокирует(((((((( */ 
 }
 
 chrome.runtime.sendMessage({

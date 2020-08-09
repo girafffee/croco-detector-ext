@@ -51,6 +51,9 @@ const setDOMInfo = plugins => {
 	.filter( 
 		plug => ~ ( plugins.toString() ).indexOf( plug.name ) 
 	);
+	console.log(plugins_finded);
+	console.log('get namespaces in popup: ' + new Date());
+
 	build_plugins_dom( plugins_finded );
   };
   
