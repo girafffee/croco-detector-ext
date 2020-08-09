@@ -13,6 +13,7 @@ function get_namespaces(ajax_url) {
         console.log( "error" );
     });
 
+    console.log(namespaces);
     // var xhr = new XMLHttpRequest();
     // xhr.open("GET", ajax_url, false); // async=true
     // xhr.onload = function (e) {
