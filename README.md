@@ -1,0 +1,1 @@
+# Croco Detector Extension
