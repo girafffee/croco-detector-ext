@@ -19,7 +19,7 @@
 		.crocdec-container {
 			padding: 8px;
 		}
-		.crocdec-container div {
+		.crocdec-header, .crocdec-footer, .crocdec-table-content {
 			padding: 10px;
 		}
 		.crocdec-header {
@@ -37,8 +37,15 @@
 			color: lightseagreen;
 		}
 
-		.crocodec-plugin-item {
+		.crocodec-row {
 			display: flex;
+			flex-flow: row wrap;
+		}
+		.crocodec-plugin-item {
+			flex: 0px;
+		}
+		.crocodec-row, .crocodec-plugin-item, .crocodec-plugin-item div {
+			padding: 5px;
 		}
 		.crocodec-plugin-item .crocodec-plugin-title {
 			font-size: 15px;
@@ -71,15 +78,17 @@
 		</div>
 		<div class="crocodec-loader"></div>
 		<div class="crocdec-table-content" style="display: none;">
-			<div class="crocodec-plugin-item">
-				<div class="crocodec-col">
-					<img class="crocodec-plugin-logo" src="cropped-fav-180x180.png" alt="logo" width="32" height="32"/>
-				</div>
-				<div class="crocodec-col">
-					<p class="crocodec-plugin-title">Title</p>
-					<p class="crocodec-plugin-description">Description Description</p>
-				</div>
-			</div>
+			<div class="crocodec-row">
+				<div class="crocodec-plugin-item">
+					<div>
+						<img class="crocodec-plugin-logo" src="cropped-fav-180x180.png" alt="logo" width="32" height="32"/>
+					</div>
+					<div>
+						<p class="crocodec-plugin-title">Title</p>
+						<p class="crocodec-plugin-description">Description Description</p>
+					</div>					
+				</div>	
+			</div>								
 		</div>
 		<div class="crocdec-footer">
 			<i class="fas fa-cog"></i>

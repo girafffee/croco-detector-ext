@@ -2,14 +2,20 @@
 const LOGOS_PATH = '/logos/';
 const API_URL = 'https://api.github.com/repos/girafffee/croco-detector-ext/contents/';
 const CONTENT_CLASS = '.crocdec-table-content';
+const CONTENT_ROW_CLASS = '.crocodec-row';
 const PLUGIN_ITEM_CLASS = '.crocodec-plugin-item';
 const PLUGIN_TITLE_CLASS = '.crocodec-plugin-title'; 
 const PLUGIN_DESC_CLASS = '.crocodec-plugin-description';
 const PLUGIN_LOGO_CLASS = '.crocodec-plugin-logo';
 const LOADER_CLASS = '.crocodec-loader';
 
-function _q(selector) {
-	let element = document.querySelector(selector);
+let plugins_search = get_file_content_api( 'js/plugins-search.json' );
+
+function _q(selector, isLast = false) {
+	let element;
+	isLast 
+		? element = Array.from(document.querySelectorAll(selector)).pop() 
+		: element = document.querySelector(selector);
 	
 	if ( element ) return element;
 	else return false; 
@@ -38,18 +44,34 @@ function get_file_content_api(filename, type = "json") {
 }
 
 function build_plugins_dom( plugins ) {
-	let section = _q(CONTENT_CLASS);
+	let section = _q( CONTENT_CLASS );
+	let rows = [];
+	let item_dom;
 	plugins.forEach( ( element, index ) => {
 		if ( index === 0) {
-			let item_dom = _q(PLUGIN_ITEM_CLASS);
+
+			item_dom = _q( PLUGIN_ITEM_CLASS );
 			insert_data_plugin( item_dom, element );
-		} else {
-			let item_dom = _q(PLUGIN_ITEM_CLASS).cloneNode(true);
+
+		} else if ( index % 2 !== 0 ) {
+			
+			item_dom = _q( PLUGIN_ITEM_CLASS ).cloneNode( true );
 			insert_data_plugin( item_dom, element );
 			
-			section.append( item_dom );
+			index > 1 
+				? rows[ rows.length - 1 ].appendChild( item_dom )
+				: _q( CONTENT_ROW_CLASS, true ).appendChild( item_dom );
+
+		} else {
+			rows.push( _q( CONTENT_ROW_CLASS ).cloneNode() );
+			item_dom = _q( PLUGIN_ITEM_CLASS ).cloneNode( true );
+			insert_data_plugin( item_dom, element );
+
+			rows[ rows.length - 1 ].appendChild( item_dom );			
 		}
 	});
+
+	rows.forEach( row => section.appendChild( row ) );
 }
 
 
@@ -63,22 +85,18 @@ function displayElement( { element, show = true } ) {
 	show ? element.style.display = 'block' : element.style.display = 'none';
 }
 
-const setDOMInfo = plugins => {	
-	let plugins_finded = get_file_content_api( 'js/plugins-search.json' )
-	.filter( 
-		plug => ~ ( plugins.toString() ).indexOf( plug.name ) 
-	);
-	console.log(plugins_finded);
-	console.log('get namespaces in popup: ' + new Date());
+const setDOMInfo = ( { api: plugins, html: pageContent } )  => {	
+	console.log(plugins);
 
-	build_plugins_dom( plugins_finded );
+	build_plugins_dom( plugins );
 
 	_q(LOADER_CLASS).remove();
 	displayElement( { element: _q(CONTENT_CLASS) } );
+
   };
   
   // Once the DOM is ready...
-  window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
     // ...query for the active tab...
     chrome.tabs.query({
       active: true,
@@ -87,9 +105,9 @@ const setDOMInfo = plugins => {
       // ...and send a request for the DOM info...
       chrome.tabs.sendMessage(
           tabs[0].id,
-          {from: 'popup', subject: 'DOMInfo'},
+          {from: 'popup', subject: 'DOMInfo', data: plugins_search},
           // ...also specifying a callback to be called 
           //    from the receiving end (content script).
           setDOMInfo);
     });
-  });
+});

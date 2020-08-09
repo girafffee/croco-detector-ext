@@ -1,5 +1,13 @@
 // Inform the background page that 
 // this tab should have a page-action.
+(() => {
+    var s = document.createElement('script');
+    s.className = 'crocodec-inject';
+    s.src = chrome.runtime.getURL('js/inject.js');
+
+    document.querySelector('body').onload = () => document.querySelector('body').appendChild(s);
+})();
+
 function get_namespaces(ajax_url) { 
 
     let namespaces;
@@ -47,11 +55,27 @@ chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
 
         let wp_json_api = document.querySelector('link[rel="https://api.w.org/"]').href;
-        let plugins = get_namespaces(wp_json_api);
+        let namespaces = get_namespaces(wp_json_api);
+        
+        let plugins = msg.data.filter(
+            plug => {
+                if( ~ ( namespaces.toString() ).indexOf( plug.name ) ) {
+                    plug.finded = true;
+                    return true;
+                }
+            }
+        );
+
+        find_by_headers( msg.data.filter( plug => ( ! plug.finded && plug.findType === 'headers' ) ) );
 
 		// Directly respond to the sender (popup), 
         // through the specified callback.
         
-        response( plugins );
+        response( { api: plugins, html: document.querySelector('html').innerHTML } );
     }
 });
+
+function find_by_headers( search_plugins ) {
+    console.log( search_plugins );
+}
+
