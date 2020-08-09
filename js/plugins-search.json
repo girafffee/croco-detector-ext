@@ -42,14 +42,7 @@
         "description": "Dynamic blogging widgets"
     },
     {
-        "name": "jet-woobuilder",
-        "label": "JetWooBuilder",
-        "logo_type": "file",
-        "logo_name": "jetwoobuilder.svg",
-        "description": "Everything for WooCommerce"
-    },
-    {
-        "name": "jet-woobuilder",
+        "name": "jet-woo-builder-api",
         "label": "JetWooBuilder",
         "logo_type": "file",
         "logo_name": "jetwoobuilder.svg",
