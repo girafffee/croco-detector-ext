@@ -3,43 +3,50 @@
         "name": "jet-menu",
         "label": "JetMenu",
         "logo_name": "jetmenu.png",
-        "description": "Build your custom mega menu" 
+        "description": "Build your custom mega menu",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-engine",
         "label": "JetEngine",
         "logo_name": "jetengine-logo.png",
-        "description": "Everything for dynamic content"
+        "description": "Everything for dynamic content",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-tricks",
         "label": "JetTricks",
         "logo_name": "jettricks.png",
-        "description": "Eye-candy visual effects"
+        "description": "Eye-candy visual effects",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-elements",
         "label": "JetElements",
         "logo_name": "jetelements-logo.png",
-        "description": "Meet the basic must-have widgets"
+        "description": "Meet the basic must-have widgets",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-tabs",
         "label": "JetTabs",
         "logo_name": "jettabs.svg",
-        "description": "Dynamic tabs, toggles & accordions"
+        "description": "Dynamic tabs, toggles & accordions",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-blog",
         "label": "JetBlog",
         "logo_name": "jetblog.svg",
-        "description": "Dynamic blogging widgets"
+        "description": "Dynamic blogging widgets",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-woo-builder",
         "label": "JetWooBuilder",
         "logo_name": "jetwoobuilder.svg",
-        "description": "Everything for WooCommerce"
+        "description": "Everything for WooCommerce",
+        "findType": "apiWpJson"
     },
     {
         "name": "jet-booking",
