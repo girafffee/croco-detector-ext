@@ -1,7 +1,7 @@
 // Update the relevant fields with the new data.
-const LOGOS_PATH = '/logos/';
+const LOGOS_PATH = '/img/logos/';
 const API_URL = 'https://api.github.com/repos/girafffee/croco-detector-ext/contents/';
-const CONTENT_CLASS = '.crocdec-table-content';
+const CONTENT_CLASS = '.crocodec-table-content';
 const CONTENT_ROW_CLASS = '.crocodec-row';
 const PLUGIN_ITEM_CLASS = '.crocodec-plugin-item';
 const PLUGIN_TITLE_CLASS = '.crocodec-plugin-title'; 

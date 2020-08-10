@@ -36,7 +36,7 @@
         "description": "Dynamic blogging widgets"
     },
     {
-        "name": "jet-woo-builder-api",
+        "name": "jet-woo-builder",
         "label": "JetWooBuilder",
         "logo_name": "jetwoobuilder.svg",
         "description": "Everything for WooCommerce"

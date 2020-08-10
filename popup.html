@@ -14,26 +14,51 @@
 		body {
 			font-family: 'Montserrat', sans-serif;
 			font-size: 14px;
-			width: 480px;
+			width: 500px;
 		}
-		.crocdec-container {
-			padding: 8px;
-		}
-		.crocdec-header, .crocdec-footer, .crocdec-table-content {
+		.crocodec-footer, .crocodec-table-content {
 			padding: 10px;
 		}
-		.crocdec-header {
+		.crocodec-header {
 			border-bottom: 1px solid #cccccc;
+			background: linear-gradient(90deg, #5B77E7 0%, #49B5D2 53.65%, #26E8A8 100%);
+			background-color: rgba(0, 0, 0, 0);
+			background-position-x: 0%;
+			background-position-y: 0%;
+			background-repeat: repeat;
+			background-attachment: scroll;
+			background-image: linear-gradient(90deg, rgb(91, 119, 231) 0%, rgb(73, 181, 210) 53.65%, rgb(38, 232, 168) 100%);
+			background-size: auto;
+			background-origin: padding-box;
+			background-clip: border-box;
 		}
-		.crocdec-footer {
+		.crocodec-header-img {
+			background-position: right top;
+			background-repeat: no-repeat;
+			background-image: url("img/background-header.png");
+		}
+		.crocodec-header-content {
+			padding: 38px 40px 33px;
+			display: flex;
+			color: #fff;
+			align-items: baseline;
+		}
+		.header-title {
+			font-size: 18px;
+			
+			line-height: 20px;
+			letter-spacing: 0.005em;
+			margin: 0 0 0 15px;
+		}
+		.crocodec-footer {
 			border-top: 1px solid #cccccc;
 		}
-		.crocdec-footer i {
+		.crocodec-footer i {
 			font-size: 28px;
 			color: indigo;
 			transition: 0.1s ease-in-out;
 		}
-		.crocdec-footer i:hover {
+		.crocodec-footer i:hover {
 			color: lightseagreen;
 		}
 
@@ -42,6 +67,7 @@
 			flex-flow: row wrap;
 		}
 		.crocodec-plugin-item {
+			display: flex;
 			flex: 0px;
 		}
 		.crocodec-row, .crocodec-plugin-item, .crocodec-plugin-item div {
@@ -72,12 +98,24 @@
 	<script src="js/popup.js"></script>
 </head>
 <body>
-	<section class="crocdec-container">
-		<div class="crocdec-header">
-			<h3 class="crocdec-title">Crocoblock Detector</h3>
+	<section class="crocodec-container">
+		<div class="crocodec-header">
+			<div class="crocodec-header-img">
+				<div class="crocodec-header-content">
+					<div class="header-logo">
+						<a href="http://192.168.4.45/2020/demo-3/wp-admin/tools.php?page=crocoblock-wizard&sub=welcome">
+							<img src="img/logo.svg" alt="logo" />
+						</a>
+					</div>
+					<div class="header-title">
+						<h2 class="crocodec-title">Detector</h2>
+					</div>
+				</div>
+				
+			</div>
 		</div>
 		<div class="crocodec-loader"></div>
-		<div class="crocdec-table-content" style="display: none;">
+		<div class="crocodec-table-content" style="display: none;">
 			<div class="crocodec-row">
 				<div class="crocodec-plugin-item">
 					<div>
@@ -90,7 +128,7 @@
 				</div>	
 			</div>								
 		</div>
-		<div class="crocdec-footer">
+		<div class="crocodec-footer">
 			<i class="fas fa-cog"></i>
 		</div>
 	</section>
