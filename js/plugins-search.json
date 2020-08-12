@@ -4,69 +4,89 @@
         "label": "JetMenu",
         "logo_name": "jetmenu.png",
         "description": "Build your custom mega menu",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-engine",
         "label": "JetEngine",
         "logo_name": "jetengine-logo.png",
         "description": "Everything for dynamic content",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-tricks",
         "label": "JetTricks",
         "logo_name": "jettricks.png",
         "description": "Eye-candy visual effects",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-elements",
         "label": "JetElements",
         "logo_name": "jetelements-logo.png",
         "description": "Meet the basic must-have widgets",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-tabs",
         "label": "JetTabs",
         "logo_name": "jettabs.svg",
         "description": "Dynamic tabs, toggles & accordions",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-blog",
         "label": "JetBlog",
         "logo_name": "jetblog.svg",
         "description": "Dynamic blogging widgets",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-woo-builder",
         "label": "JetWooBuilder",
         "logo_name": "jetwoobuilder.svg",
         "description": "Everything for WooCommerce",
-        "findType": "apiWpJson"
+        "find": { 
+            "name": "ApiWpJson"
+        }
     },
     {
         "name": "jet-booking",
         "label": "JetBooking",
         "logo_name": "jetbooking.png",
         "description": "Booking plugin for Elementor",
-        "findType": "headers"
+        "find": { 
+            "name": "DomInject"
+        }
     },
     {
         "name": "jet-appointments-booking",
         "label": "JetAppointment",
         "logo_name": "jetappoiments-logo.png",
         "description": "Appointment plugin for Elementor",
-        "findType": "headers"
+        "find": { 
+            "name": "DomInject"
+        }
     },
     {
         "name": "jet-smart-filters",
         "label": "JetSmartFilters",
         "logo_name": "jetsmartfilters.svg",
         "description": "Advanced filters for any post type",
-        "findType": "headers"
+        "find": { 
+            "name": "DomInject"
+        }
     }
 ]

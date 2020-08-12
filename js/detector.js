@@ -4,42 +4,50 @@
 
 class Detector {
     
-    constructor() {
+    constructor(data  = {}) {
         this.pluginsByTypes = {};
         this.searchPlugins = {};
         this._pluginData = [];
 
-        this.FIND_FUNCTION_PREFIX = 'findBy_';
+        this.detectPlugins = data;   
+
+        this.FIND_FUNCTION_PREFIX = 'findIn_';
     }
 
     set detectPlugins(value) {
+        if ( ! value ) return;
+
         this._pluginData = value;
-        
+
         this._pluginData.forEach( 
             plugin => {
-                if ( typeof plugin.findType !== "undefinded" ){
+                if ( typeof plugin.find !== "undefinded" && typeof plugin.find.name !== "undefinded"){
                     
-                    (typeof this.pluginsByTypes[ this.FIND_FUNCTION_PREFIX + plugin.findType ] === "undefined")
-                        ? this.pluginsByTypes[ this.FIND_FUNCTION_PREFIX + plugin.findType ] = []
-                        : this.pluginsByTypes[ this.FIND_FUNCTION_PREFIX + plugin.findType ].push( plugin.name );
+                    (typeof this.pluginsByTypes[ plugin.find.name ] === "undefined")
+                        ? (this.pluginsByTypes[ plugin.find.name ] = []).push( plugin.name )
+                        : this.pluginsByTypes[ plugin.find.name ].push( plugin.name );
                 }
                 this.searchPlugins[plugin.name] = plugin;
+                
             }
-        );    
+        );   
     }
 
     get detectPlugins() { 
-        Object.keys(this.pluginsByTypes).forEach( func => {
-            if (typeof this[ func ] === "function") 
-                this[ func ].call(this, func);
+        Object.keys(this.pluginsByTypes).forEach( type => {
+
+            let callback_fun = this.FIND_FUNCTION_PREFIX + type;
+
+            if (typeof this[ callback_fun ] === "function") 
+                this[ callback_fun ].call(this, type);
             else 
-                console.warn( `Please add function: Detector.${ func }` ); 
+                console.warn( `Please add function: Detector.${ callback_fun }` ); 
         } );
 
-        return this._pluginData.filter( item => this.searchPlugins[item.name].finded );
+        return this._pluginData.filter( item => this.searchPlugins[ item.name ].finded );
     }
 
-    findBy_apiWpJson( type = "" ) {
+    findIn_apiWpJson( type = "" ) {
         if ( ! type ) return;
 
         let wp_json_api = document.querySelector('link[rel="https://api.w.org/"]').href;
@@ -51,6 +59,15 @@ class Detector {
                     this.searchPlugins[plug_name].finded = true;
             }
         );
+    }
+
+    static new(data = {}) {
+        let obj = new this;
+        if ( ! data ) {
+            return obj;
+        }
+        obj.detectPlugins = data;
+        return obj;
     }
   
 }
@@ -82,9 +99,7 @@ chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
 
-        let d = new Detector;
-        d.detectPlugins = msg.data; 
-        
+        let d = new Detector(msg.data);
         response( { api: d.detectPlugins, html: document.querySelector('html').innerHTML } );
     }
 });
