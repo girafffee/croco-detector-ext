@@ -117,5 +117,15 @@
         "find": { 
             "name": "ApiWpJson"
         }
+    },
+    {
+        "name": "jet-blocks",
+        "label": "JetBlocks",
+        "logo_name": "jetblocks.svg",
+        "description": "Lots of widgets needed for creating unique headers and footers",
+        "find": { 
+            "name": "ApiWpJson"
+        }
     }
+    
 ]
