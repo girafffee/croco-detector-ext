@@ -47,7 +47,7 @@ class Detector {
         return this._pluginData.filter( item => this.searchPlugins[ item.name ].finded );
     }
 
-    findIn_apiWpJson( type = "" ) {
+    findIn_ApiWpJson( type = "" ) {
         if ( ! type ) return;
 
         let wp_json_api = document.querySelector('link[rel="https://api.w.org/"]').href;
@@ -60,6 +60,10 @@ class Detector {
             }
         );
     }
+
+    // findIn_HardCheck() {
+
+    // }
 
     static new(data = {}) {
         let obj = new this;

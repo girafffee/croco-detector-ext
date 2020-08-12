@@ -66,18 +66,19 @@
         "name": "jet-booking",
         "label": "JetBooking",
         "logo_name": "jetbooking.png",
-        "description": "Booking plugin for Elementor",
+        "description": "Booking functionality for Elementor",
         "find": { 
-            "name": "DomInject"
+            "name": "HardCheck"
         }
     },
     {
         "name": "jet-appointments-booking",
         "label": "JetAppointment",
         "logo_name": "jetappoiments-logo.png",
-        "description": "Appointment plugin for Elementor",
+        "description": "A must-have solution to create forms for booking the appointments",
         "find": { 
-            "name": "DomInject"
+            "name": "DomInject",
+            "varName": "JetAPBData"
         }
     },
     {
@@ -86,7 +87,35 @@
         "logo_name": "jetsmartfilters.svg",
         "description": "Advanced filters for any post type",
         "find": { 
-            "name": "DomInject"
+            "name": "DomInject",
+            "varName": "JetSmartFilterSettings"
+        }
+    }, 
+    {
+        "name": "jet-reviews",
+        "label": "JetReviews",
+        "logo_name": "jetreviews.svg",
+        "description": "Reviews Widget for Elementor Page Builder",
+        "find": { 
+            "name": "ApiWpJson"
+        }
+    },
+    {
+        "name": "jet-woo-product-gallery",
+        "label": "JetProductGallery",
+        "logo_name": "jetproductgallery.svg",
+        "description": "Top-notch Elementor gallery plugin",
+        "find": { 
+            "name": "ApiWpJson"
+        }
+    },
+    {
+        "name": "jet-cw",
+        "label": "JetCompare&Wishlist",
+        "logo_name": "jetwoocomparewishlist.svg",
+        "description": "Must-have for online stores",
+        "find": { 
+            "name": "ApiWpJson"
         }
     }
 ]
