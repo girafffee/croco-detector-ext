@@ -31,6 +31,7 @@ class Detector {
                 
             }
         );   
+        
     }
 
     get detectPlugins() { 
@@ -50,7 +51,7 @@ class Detector {
     findIn_ApiWpJson( type = "" ) {
         if ( ! type ) return;
 
-        let wp_json_api = document.querySelector('link[rel="https://api.w.org/"]').href;
+        let wp_json_api = this.wp_json_url;
         let namespaces = get_namespaces(wp_json_api).toString();
 
         this.pluginsByTypes[type].forEach(
@@ -61,17 +62,41 @@ class Detector {
         );
     }
 
+    findIn_Selector( type = "" ) {
+        if ( ! type ) return;
+
+        this.pluginsByTypes[ type ].forEach(
+            plug_name => {
+                if ( this._q( `link[href*="${plug_name}"]` ) )
+                    this.searchPlugins[plug_name].finded = true;
+            }
+        );
+    }
+
+    get site_url() {
+        return this._q('link[rel="canonical"]').href;
+    }
+
+    get plugins_url() {
+        return (this.site_url + 'wp-content/plugins/');
+    }
+
+    get wp_json_url() {
+        return (this.site_url + 'wp-json/');
+    }
+
     // findIn_HardCheck() {
 
     // }
 
-    static new(data = {}) {
-        let obj = new this;
-        if ( ! data ) {
-            return obj;
-        }
-        obj.detectPlugins = data;
-        return obj;
+    _q(selector, isLast = false) {
+        let element;
+        isLast 
+            ? element = Array.from(document.querySelectorAll(selector)).pop() 
+            : element = document.querySelector(selector);
+        
+        if ( element ) return element;
+        else return false; 
     }
   
 }
