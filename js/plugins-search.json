@@ -5,7 +5,7 @@
         "logo_name": "jetmenu.png",
         "description": "Build your custom mega menu",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -14,7 +14,7 @@
         "logo_name": "jetengine-logo.png",
         "description": "Everything for dynamic content",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -23,7 +23,7 @@
         "logo_name": "jettricks.png",
         "description": "Eye-candy visual effects",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -32,7 +32,7 @@
         "logo_name": "jetelements-logo.png",
         "description": "Meet the basic must-have widgets",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -41,7 +41,7 @@
         "logo_name": "jettabs.svg",
         "description": "Dynamic tabs, toggles & accordions",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -50,7 +50,7 @@
         "logo_name": "jetblog.svg",
         "description": "Dynamic blogging widgets",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -59,7 +59,7 @@
         "logo_name": "jetwoobuilder.svg",
         "description": "Everything for WooCommerce",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -68,7 +68,7 @@
         "logo_name": "jetbooking.png",
         "description": "Booking functionality for Elementor",
         "find": { 
-            "name": "HardCheck"
+            "name": "Selector"
         }
     },
     {
@@ -77,8 +77,7 @@
         "logo_name": "jetappoiments-logo.png",
         "description": "A must-have solution to create forms for booking the appointments",
         "find": { 
-            "name": "DomInject",
-            "varName": "JetAPBData"
+            "name": "Selector"
         }
     },
     {
@@ -87,8 +86,7 @@
         "logo_name": "jetsmartfilters.svg",
         "description": "Advanced filters for any post type",
         "find": { 
-            "name": "DomInject",
-            "varName": "JetSmartFilterSettings"
+            "name": "Selector"
         }
     }, 
     {
@@ -97,7 +95,7 @@
         "logo_name": "jetreviews.svg",
         "description": "Reviews Widget for Elementor Page Builder",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -106,16 +104,16 @@
         "logo_name": "jetproductgallery.svg",
         "description": "Top-notch Elementor gallery plugin",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
-        "name": "jet-cw",
+        "name": "jet-compare-wishlist",
         "label": "JetCompare&Wishlist",
         "logo_name": "jetwoocomparewishlist.svg",
         "description": "Must-have for online stores",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     },
     {
@@ -124,7 +122,7 @@
         "logo_name": "jetblocks.svg",
         "description": "Lots of widgets needed for creating unique headers and footers",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "Selector"
         }
     }
     
