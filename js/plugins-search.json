@@ -4,9 +4,10 @@
         "label": "JetMenu",
         "logo_name": "jetmenu.png",
         "description": "Build your custom mega menu",
-        "find": { 
-            "name": "SelectorDom"
-        }
+        "find": [ 
+            { "name": "SelectorDom" },
+            { "name": "ApiWpJson" }
+        ]
     },
     {
         "name": "jet-engine",

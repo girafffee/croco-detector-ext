@@ -12,6 +12,9 @@ class Detector {
         this.detectPlugins = data;   
 
         this.FIND_FUNCTION_PREFIX = 'findIn_';
+        this.SET_DATA_FUNCTION_PREFIX = 'setDataFor_';
+        this.STORAGE_TYPE_PREFIX = 'storage_';
+
     }
 
     set detectPlugins(value) {
@@ -36,13 +39,9 @@ class Detector {
 
     get detectPlugins() { 
         Object.keys(this.pluginsByTypes).forEach( type => {
-
-            let callback_fun = this.FIND_FUNCTION_PREFIX + type;
-
-            if (typeof this[ callback_fun ] === "function") 
-                this[ callback_fun ].call(this, type);
-            else 
-                console.warn( `Please add function: Detector.${ callback_fun }` ); 
+            
+            this.callBy(this.SET_DATA_FUNCTION_PREFIX, type);
+            this.callBy(this.FIND_FUNCTION_PREFIX, type);
         } );
 
         return this._pluginData.filter( item => this.searchPlugins[ item.name ].finded );
@@ -51,18 +50,21 @@ class Detector {
     findIn_ApiWpJson( type = "" ) {
         if ( ! type ) return;
 
-        let wp_json_api = this.wp_json_url;
-        let namespaces = get_namespaces(wp_json_api).toString();
-
         this.pluginsByTypes[type].forEach(
             plug_name => {
-                if( ~ ( namespaces ).indexOf( plug_name ) )
+                if( ~ ( this.getStorage( type ) ).indexOf( plug_name ) )
                     this.searchPlugins[plug_name].finded = true;
             }
         );
     }
 
-    findIn_Selector( type = "" ) {
+    setDataFor_ApiWpJson( type = "" ) {
+        this.setDataForType( type, get_namespaces(this.wp_json_url).toString() );
+    }
+
+    
+
+    findIn_SelectorDom( type = "" ) {
         if ( ! type ) return;
 
         this.pluginsByTypes[ type ].forEach(
@@ -71,6 +73,27 @@ class Detector {
                     this.searchPlugins[plug_name].finded = true;
             }
         );
+    }
+
+    setDataForType( type = "" , data = "") {
+        if ( ! type ) return;
+
+        this[ this.STORAGE_TYPE_PREFIX + type ] = data;
+    }
+
+    getStorage( type = "" ) {
+        return this[ this.STORAGE_TYPE_PREFIX + type ];
+    } 
+
+    callBy( pref = "", type = "" ) {
+        if ( ! type ) return;
+
+        let callback_function = pref + type;
+
+        if (typeof this[ callback_function ] === "function") 
+                this[ callback_function ].call(this, type);
+        else 
+            console.warn( `Please add function: Detector.${ callback_function }` ); 
     }
 
     get site_url() {
@@ -99,6 +122,18 @@ class Detector {
         else return false; 
     }
   
+}
+
+class FindMethod {
+
+    constructor(method  = "") {
+        this.method = method;        
+    }
+
+}
+
+class ApiWpJson {
+    
 }
 
 function get_namespaces(ajax_url) { 
