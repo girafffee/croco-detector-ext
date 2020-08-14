@@ -25,6 +25,7 @@ chrome.runtime.sendMessage({
 chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
+        console.log(msg.data);
 
         let d = new ApiWpJson(msg.data);
         response( { api: d.detectPlugins, html: document.querySelector('html').innerHTML } );

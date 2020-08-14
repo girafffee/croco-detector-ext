@@ -11,7 +11,7 @@
 		"matches": ["<all_urls>"],
 		"js": [
 			"js/jquery-3.5.1.min.js",
-			"js/detector.js"
+			"js/content.js"
 		]
 	}],
 	"icons": {
@@ -28,5 +28,11 @@
 		"tabs", 
 		"*://*/*"
 	],
-	"web_accessible_resources": ["js/inject.js"]
+	"web_accessible_resources": [
+		"js/inject.js",
+		"js/content.js",
+		"js/content/detector.js",
+		"js/content/detector-class.js",
+		"js/content-scripts/apiwpjson-class.js"		   
+	]
 }
