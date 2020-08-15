@@ -31,8 +31,8 @@
 	"web_accessible_resources": [
 		"js/inject.js",
 		"js/content.js",
-		"js/content/detector.js",
-		"js/content/detector-class.js",
+		"js/content-scripts/detector.js",
+		"js/content-scripts/detector-class.js",
 		"js/content-scripts/apiwpjson-class.js"		   
 	]
 }
