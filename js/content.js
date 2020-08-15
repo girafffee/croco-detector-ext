@@ -1,12 +1,13 @@
 
 class Detector {
     
-    constructor(data  = {}) {
+    constructor(data  = {}, method = "") {
         this.pluginsByTypes = {};
         this.searchPlugins = {};
         this._pluginData = [];
 
-        this.detectPlugins = data;   
+        this.detectPlugins = data;
+        this.method = method;
 
         this.FIND_FUNCTION = 'find';
         this.SET_STORAGE_FUNCTION = 'storage';
@@ -50,17 +51,6 @@ class Detector {
     }
 
    
-
-    findIn_SelectorDom( type = "" ) {
-        if ( ! type ) return;
-
-        this.pluginsByTypes[ type ].forEach(
-            plug_name => {
-                if ( this._q( `link[href*="${plug_name}"]` ) )
-                    this.searchPlugins[plug_name].finded = true;
-            }
-        );
-    }
 
     setDataForType( data = "" ) {
         if ( ! this.method ) return;
@@ -113,10 +103,8 @@ class Detector {
 
 class ApiWpJson extends Detector {
     
-    constructor( data ) {
-        super( data );
-
-        this.method = "ApiWpJson";        
+    constructor( data, method ) {
+        super( data, method );    
     }
 
     // running with `this.callBy(this.SET_STORAGE_FUNCTION);` 
@@ -151,21 +139,70 @@ class ApiWpJson extends Detector {
     }
 }
 
+class SelectorDom extends Detector {
+    constructor( data, method ) {
+        super( data, method );      
+    }
+
+    find(allPlugins, searchPlugins) {
+        allPlugins.forEach(
+            plug_name => {
+                if ( this._q( `link[href*="${plug_name}"]` ) )
+                    searchPlugins[plug_name].finded = true;
+            }
+        );
+    }
+
+    storage () {
+        return null;
+    }
+}
+
 
 class FindTypeFactory {
 
-    static set() {
-        this.classes = {
-            ApiWpJson
-        };
+    static classes = {
+        ApiWpJson, 
+        SelectorDom
     }
 
-    static new( type = "" ) {
-        this.set();
+    static new( type = "", args = [] ) {
 
-        if ( ! type || ! this.classes[type] ) return;
+        if ( ! type || ! this.classes[ type ] ) return;
 
-        return this.classes[ type ];
+        return new this.classes[ type ]( ...args );
+    }
+
+    static issetClass( className ) {
+        return ( className && this.classes[ className ] );
+    }
+
+    static all( data = {} ) {
+        let plugins = [];
+        Object.keys( this.classes ).forEach( className => {
+            
+            if ( this.issetClass(className) ){
+
+                let obj = new (this.get( className ))( data, this.get( className ).name );
+                
+                plugins.push( obj.detectPlugins );
+            }
+        });
+
+        return plugins;
+    }
+
+    // todo: find and save all types in array data
+    // and then compare with `classes`
+    static getTypes( data = [] ) {
+        if ( ! data ) return;
+
+        // code
+    }
+
+    static get( name = "" ) {
+        if ( this.issetClass( name ) )
+            return this.classes[ name ];
     }
 }
 
@@ -179,9 +216,9 @@ chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
 
-        //let d = new ApiWpJson(msg.data);
-        let d = new (FindTypeFactory.new('ApiWpJson'))(msg.data);
-        response( { api: d.detectPlugins, html: document.querySelector('html').innerHTML } );
+        //let d = FindTypeFactory.new( 'ApiWpJson', [ msg.data, 'ApiWpJson' ] );
+
+        response( { api: FindTypeFactory.all(msg.data), html: document.querySelector('html').innerHTML } );
     }
 });
 

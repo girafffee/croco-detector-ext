@@ -86,7 +86,7 @@
         "logo_name": "jetsmartfilters.svg",
         "description": "Advanced filters for any post type",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "SelectorDom"
         }
     }, 
     {
@@ -113,7 +113,7 @@
         "logo_name": "jetwoocomparewishlist.svg",
         "description": "Must-have for online stores",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "SelectorDom"
         }
     },
     {
@@ -131,7 +131,7 @@
         "logo_name": "jetpopup.svg",
         "description": "Stylish Popup builder for Elementor",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "SelectorDom"
         }
     }
     
