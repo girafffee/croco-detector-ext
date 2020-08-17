@@ -72,8 +72,14 @@ class Detector {
             console.warn( `Please add function: Detector.${ callback }` ); 
     }
 
+    // url can be: http://ld.crocoblock.com/testing/?p=502
+    // or it's home page
     get site_url() {
-        return this._q('link[rel="canonical"]').href;
+        let link = this._q('link[rel="shortlink"]').href;
+
+        return ( ~ ( link ).indexOf( '?' ) )
+            ? link.split('?')[0]
+            : link;
     }
 
     get plugins_url() {
@@ -146,7 +152,7 @@ class SelectorDom extends Detector {
     find(allPlugins, searchPlugins) {
         allPlugins.forEach(
             plug_name => {
-                if ( this._q( `link[href*="${plug_name}"]` ) )
+                if ( this._q( `link[href*="${plug_name}"]` ) || this._q( `.` + plug_name ))
                     searchPlugins[plug_name].finded = true;
             }
         );
@@ -161,8 +167,8 @@ class SelectorDom extends Detector {
 class FindTypeFactory {
 
     static classes = {
-        SelectorDom,
-        ApiWpJson        
+        ApiWpJson,
+        SelectorDom              
     }
 
     static new( type = "", args = [] ) {
