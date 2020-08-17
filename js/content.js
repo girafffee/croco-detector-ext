@@ -2,12 +2,12 @@
 class Detector {
     
     constructor(data  = {}, method = "") {
-        this.pluginsByTypes = {};
+        this.pluginsByMethod = [];
         this.searchPlugins = {};
         this._pluginData = [];
 
-        this.detectPlugins = data;
         this.method = method;
+        this.detectPlugins = data;
 
         this.FIND_FUNCTION = 'find';
         this.SET_STORAGE_FUNCTION = 'storage';
@@ -22,30 +22,29 @@ class Detector {
 
         this._pluginData.forEach( 
             plugin => {
-                if ( typeof plugin.find !== "undefinded" && typeof plugin.find.name !== "undefinded"){
+                if ( typeof plugin.find !== "undefinded" 
+                && typeof plugin.find.name !== "undefinded" 
+                && this.method === plugin.find.name ){
                     
-                    (typeof this.pluginsByTypes[ plugin.find.name ] === "undefined")
-                        ? (this.pluginsByTypes[ plugin.find.name ] = []).push( plugin.name )
-                        : this.pluginsByTypes[ plugin.find.name ].push( plugin.name );
-                }
-                this.searchPlugins[plugin.name] = plugin;
-                
+                    this.pluginsByMethod.push( plugin.name );
+                }            
+                (this.searchPlugins[plugin.name] = {}).finded = false;
             }
         );   
         
     }
 
     get detectPlugins() { 
-        Object.keys(this.pluginsByTypes).forEach( type => {
+        //Object.keys(this.pluginsByTypes).forEach( type => {
             
-            this.setDataForType( this.callBy(this.SET_STORAGE_FUNCTION) );
+        this.setDataForType( this.callBy(this.SET_STORAGE_FUNCTION) );
             
-            this.callBy( this.FIND_FUNCTION, [
-                this.pluginsByTypes[ this.method ],
-                this.searchPlugins,
-                this.getStorage()
-            ]);
-        } );
+        this.callBy( this.FIND_FUNCTION, [
+            this.pluginsByMethod,
+            this.searchPlugins,
+            this.getStorage()
+        ]);   
+        //} );
 
         return this._pluginData.filter( item => this.searchPlugins[ item.name ].finded );
     }
@@ -162,8 +161,8 @@ class SelectorDom extends Detector {
 class FindTypeFactory {
 
     static classes = {
-        ApiWpJson, 
-        SelectorDom
+        SelectorDom,
+        ApiWpJson        
     }
 
     static new( type = "", args = [] ) {
@@ -185,7 +184,7 @@ class FindTypeFactory {
 
                 let obj = new (this.get( className ))( data, this.get( className ).name );
                 
-                plugins.push( obj.detectPlugins );
+                plugins.push( ...obj.detectPlugins );
             }
         });
 
