@@ -85,9 +85,7 @@ function displayElement( { element, show = true } ) {
 	show ? element.style.display = 'block' : element.style.display = 'none';
 }
 
-const setDOMInfo = ( { api: plugins, html: pageContent } )  => {	
-	console.log(plugins);
-
+const setDOMInfo = ( { plugins } )  => {	
 	build_plugins_dom( plugins );
 
 	_q(LOADER_CLASS).remove();

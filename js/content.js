@@ -136,6 +136,7 @@ class ApiWpJson extends Detector {
         allPlugins.forEach(
             plug_name => {
                 if( ~ ( storage ).indexOf( plug_name ) ) {
+                    initEvent( events.ON_FIND, { name: plug_name, method: this.method } )();
                     searchPlugins[plug_name].finded = true; 
                 }
             }
@@ -152,8 +153,14 @@ class SelectorDom extends Detector {
     find(allPlugins, searchPlugins) {
         allPlugins.forEach(
             plug_name => {
-                if ( this._q( `link[href*="${plug_name}"]` ) || this._q( `.` + plug_name ))
+                if ( this._q( `link[href*="${plug_name}"]` ) 
+                || this._q( `.` + plug_name )
+                || this._q( `div[class*="${plug_name}"]` )
+                ) {
+                    initEvent( events.ON_FIND, { name: plug_name, method: this.method } )();
                     searchPlugins[plug_name].finded = true;
+                }
+                    
             }
         );
     }
@@ -162,6 +169,11 @@ class SelectorDom extends Detector {
         return null;
     }
 }
+
+/*
+* Todo: class InjectDom
+*       find by js variables
+*/
 
 
 class FindTypeFactory {
@@ -211,6 +223,45 @@ class FindTypeFactory {
     }
 }
 
+let events = {
+    BEFORE_DETECT: 'beforeDetect',
+    ON_FIND: 'onFind',
+    AFTER_DETECT: 'afterDetect'
+};
+
+function beforeDetect () {
+    console.log(document.querySelector('meta[name="generator"]'));
+};
+
+function onFind( { detail } ) {
+    const { name, method } = detail;
+    
+    console.log(name, method);
+}
+
+(() => {
+    let listen = name => {
+        document.addEventListener( name, this[ name ], false);
+    };
+
+    Object.keys( events ).forEach( event => {
+        
+        typeof events[ event ] === 'string'
+            ? listen( events[ event ] )
+            : events[ event ].forEach( ev => listen( ev ) );
+    })
+})()
+
+
+function initEvent( name, details = {} ) {
+    let event = new CustomEvent(name, {
+        detail: details
+    });
+    return function () {
+        document.dispatchEvent(event)
+    };
+}
+
 chrome.runtime.sendMessage({
     from: 'content',
     subject: 'showPageAction',
@@ -220,10 +271,15 @@ chrome.runtime.sendMessage({
 chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
-
+        
+        initEvent(events.BEFORE_DETECT)();
         //let d = FindTypeFactory.new( 'ApiWpJson', [ msg.data, 'ApiWpJson' ] );
+        response( { plugins: FindTypeFactory.all(msg.data) } );
+    }
 
-        response( { api: FindTypeFactory.all(msg.data), html: document.querySelector('html').innerHTML } );
+    if ( (msg.from === 'background') && (msg.subject === 'test') ) {
+
+        console.log('Success from background ', msg.data);
     }
 });
 
