@@ -136,8 +136,9 @@ class ApiWpJson extends Detector {
         allPlugins.forEach(
             plug_name => {
                 if( ~ ( storage ).indexOf( plug_name ) ) {
-                    initEvent( events.ON_FIND, { name: plug_name, method: this.method } )();
-                    searchPlugins[plug_name].finded = true; 
+                    let ce = new ContentEvents();
+                    ce.runEvent( ce.events.ON_FIND, { name: plug_name, method: this.method } );
+                    searchPlugins[ plug_name ].finded = true; 
                 }
             }
         );
@@ -157,8 +158,9 @@ class SelectorDom extends Detector {
                 || this._q( `.` + plug_name )
                 || this._q( `div[class*="${plug_name}"]` )
                 ) {
-                    initEvent( events.ON_FIND, { name: plug_name, method: this.method } )();
-                    searchPlugins[plug_name].finded = true;
+                    let ce = new ContentEvents();
+                    ce.runEvent( ce.events.ON_FIND, { name: plug_name, method: this.method } );
+                    searchPlugins[ plug_name ].finded = true;
                 }
                     
             }
@@ -200,7 +202,7 @@ class FindTypeFactory {
             
             if ( this.issetClass(className) ){
 
-                let obj = new (this.get( className ))( data, this.get( className ).name );
+                let obj = new ( this.get( className ) )( data, this.get( className ).name );
                 
                 plugins.push( ...obj.detectPlugins );
             }
@@ -223,44 +225,57 @@ class FindTypeFactory {
     }
 }
 
-let events = {
-    BEFORE_DETECT: 'beforeDetect',
-    ON_FIND: 'onFind',
-    AFTER_DETECT: 'afterDetect'
-};
+class ContentEvents {
 
-function beforeDetect () {
-    console.log(document.querySelector('meta[name="generator"]'));
-};
+    constructor ( name, detail ) {
+        this.events = {
+            BEFORE_DETECT: 'beforeDetect',
+            ON_FIND: 'onFind'
+        };
 
-function onFind( { detail } ) {
-    const { name, method } = detail;
+        this.name = name;
+        this.detail = detail;
+    }
+
+    static get ev() {
+        return this.events;
+    }
+
+    runEvent() {
+        this.addListeners();        
+
+        let event = new CustomEvent( this.name, {
+            detail: this.detail
+        });
+
+        document.dispatchEvent(event);
+    }
+
+    addListeners() {
+        let listen = name => {
+            document.addEventListener( name, this[ name ], false);
+        };
     
-    console.log(name, method);
-}
+        Object.keys( this.events ).forEach( event => {
+            
+            typeof this.events[ event ] === 'string'
+                ? listen( this.events[ event ] )
+                : this.events[ event ].forEach( ev => listen( ev ) );
+        });
+    }
 
-(() => {
-    let listen = name => {
-        document.addEventListener( name, this[ name ], false);
-    };
+    beforeDetect () {
+        console.log(document.querySelector('meta[name="generator"]'));
+    }
 
-    Object.keys( events ).forEach( event => {
+    onFind( { detail } ) {
+        const { name, method } = detail;
         
-        typeof events[ event ] === 'string'
-            ? listen( events[ event ] )
-            : events[ event ].forEach( ev => listen( ev ) );
-    })
-})()
-
-
-function initEvent( name, details = {} ) {
-    let event = new CustomEvent(name, {
-        detail: details
-    });
-    return function () {
-        document.dispatchEvent(event)
-    };
+        console.log(name, method);
+    }
+    
 }
+
 
 chrome.runtime.sendMessage({
     from: 'content',
@@ -272,7 +287,8 @@ chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
         
-        initEvent(events.BEFORE_DETECT)();
+        let ce = new ContentEvents();
+        ce.runEvent( ce.events.BEFORE_DETECT );
         //let d = FindTypeFactory.new( 'ApiWpJson', [ msg.data, 'ApiWpJson' ] );
         response( { plugins: FindTypeFactory.all(msg.data) } );
     }
