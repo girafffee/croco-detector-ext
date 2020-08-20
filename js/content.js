@@ -20,15 +20,21 @@ class Detector {
 
         this._pluginData = value;
 
-        this._pluginData.forEach( 
-            plugin => {
-                if ( typeof plugin.find !== "undefinded" 
-                && typeof plugin.find.name !== "undefinded" 
-                && this.method === plugin.find.name ){
+        this._pluginData.forEach( plugin => {
+
+                if ( typeof plugin.find !== "undefined" ) {
+                    (this.searchPlugins[plugin.name] = {}).finded = false;
+
+                    if ( typeof plugin.find.name !== "undefined" && this.method === plugin.find.name ) {
+
+                        this.pluginsByMethod.push( plugin.name );
+                    } 
+                    if ( typeof plugin.find.data !== "undefined" ) {
                     
-                    this.pluginsByMethod.push( plugin.name );
-                }            
-                (this.searchPlugins[plugin.name] = {}).finded = false;
+                        this.searchPlugins[plugin.name].data = plugin.find.data;
+                    }
+                    
+                }    
             }
         );   
         
@@ -123,7 +129,7 @@ class ApiWpJson extends Detector {
 
     // running with `this.callBy(this.SET_STORAGE_FUNCTION);` 
     // in `get Detector.detectPlugins`
-    storage() { 
+    storage () { 
         let namespaces = "empty";
         $.ajax({
             url: super.wp_json_url,
@@ -140,17 +146,43 @@ class ApiWpJson extends Detector {
 
     // running with `this.callBy(this.FIND_FUNCTION);` 
     // in `get Detector.detectPlugins`
-    find(allPlugins, searchPlugins, storage) {
+    find (allPlugins, searchPlugins, storage) {
+        //let event = ( plug_name ) => ( new ContentEvents( events.ON_FIND, { name: plug_name, method: this.method } ) ).runEvent();
 
-        allPlugins.forEach(
-            plug_name => {
-                if( ~ ( storage ).indexOf( plug_name ) ) {
-                    ( new ContentEvents( events.ON_FIND, { name: plug_name, method: this.method } ) ).runEvent();
+        allPlugins.forEach( plug_name => {
+                if ( searchPlugins[ plug_name ].data && searchPlugins[ plug_name ].data.apiUrl ) {
+                    let url = searchPlugins[ plug_name ].data.apiUrl;
+
+                    if ( this.issetByDataUrl( url ) ) {
+                        searchPlugins[ plug_name ].finded = true; 
+                        //event( plug_name );
+                    }
+            
+                }
+
+                if ( ~ ( storage ).indexOf( plug_name ) ) {
                     searchPlugins[ plug_name ].finded = true; 
+                    //event( plug_name );
                 }
             }
         );
         
+    }
+
+    issetByDataUrl ( apiUrl ) {
+        let success = false;
+        $.ajax({
+            url: ( this.wp_json_url + apiUrl ),
+            dataType: 'json',
+            async: false
+        }).done( () => {
+            console.log( "it's doesn't be here..." );
+        }).fail( responce => {
+            if ( responce.status === 401 )
+                success = true;
+        });
+
+        return success;
     }
 }
 
