@@ -75,11 +75,20 @@ class Detector {
     // url can be: http://ld.crocoblock.com/testing/?p=502
     // or it's home page
     get site_url() {
-        let link = this._q('link[rel="shortlink"]').href;
-
-        return ( ~ ( link ).indexOf( '?' ) )
-            ? link.split('?')[0]
-            : link;
+        let shortlink = this._q('link[rel="shortlink"]').href;
+        let feedlink = this._q('link[rel="alternate"]').href;
+        
+        return shortlink 
+            ?   ( 
+                    ( ~ ( shortlink ).indexOf( '?' )) 
+                        ? shortlink.split('?')[0] 
+                        : shortlink 
+                ) 
+            :   (
+                    ( ~ ( feedlink ).indexOf( 'feed' ) ) 
+                        ? feedlink.split('feed') 
+                        : "" 
+                );
     }
 
     get plugins_url() {
@@ -136,8 +145,7 @@ class ApiWpJson extends Detector {
         allPlugins.forEach(
             plug_name => {
                 if( ~ ( storage ).indexOf( plug_name ) ) {
-                    let ce = new ContentEvents();
-                    ce.runEvent( ce.events.ON_FIND, { name: plug_name, method: this.method } );
+                    ( new ContentEvents( events.ON_FIND, { name: plug_name, method: this.method } ) ).runEvent();
                     searchPlugins[ plug_name ].finded = true; 
                 }
             }
@@ -158,8 +166,7 @@ class SelectorDom extends Detector {
                 || this._q( `.` + plug_name )
                 || this._q( `div[class*="${plug_name}"]` )
                 ) {
-                    let ce = new ContentEvents();
-                    ce.runEvent( ce.events.ON_FIND, { name: plug_name, method: this.method } );
+                    ( new ContentEvents( events.ON_FIND, { name: plug_name, method: this.method } ) ).runEvent();
                     searchPlugins[ plug_name ].finded = true;
                 }
                     
@@ -225,26 +232,24 @@ class FindTypeFactory {
     }
 }
 
+let events = {
+    BEFORE_DETECT: 'beforeDetect',
+    ON_FIND: 'onFind'
+};
+
 class ContentEvents {
 
-    constructor ( name, detail ) {
-        this.events = {
-            BEFORE_DETECT: 'beforeDetect',
-            ON_FIND: 'onFind'
-        };
-
-        this.name = name;
+    constructor( name, detail = {} ) {
+        this.nameEvent = name;
         this.detail = detail;
+        this.events = events;
     }
 
-    static get ev() {
-        return this.events;
-    }
 
     runEvent() {
         this.addListeners();        
 
-        let event = new CustomEvent( this.name, {
+        let event = new CustomEvent( this.nameEvent, {
             detail: this.detail
         });
 
@@ -287,8 +292,7 @@ chrome.runtime.onMessage.addListener( (msg, sender, response) => {
     // First, validate the message's structure.
     if ((msg.from === 'popup') && (msg.subject === 'DOMInfo')) {
         
-        let ce = new ContentEvents();
-        ce.runEvent( ce.events.BEFORE_DETECT );
+        ( new ContentEvents( events.BEFORE_DETECT ) ).runEvent();
         //let d = FindTypeFactory.new( 'ApiWpJson', [ msg.data, 'ApiWpJson' ] );
         response( { plugins: FindTypeFactory.all(msg.data) } );
     }

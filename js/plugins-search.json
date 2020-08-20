@@ -68,7 +68,10 @@
         "logo_name": "jetbooking.png",
         "description": "Booking functionality for Elementor",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "ApiWpJson", 
+            "data": {
+                "queryUrl": "jet-engine/v2/bookings-list"
+            }
         }
     },
     {
@@ -77,7 +80,10 @@
         "logo_name": "jetappoiments-logo.png",
         "description": "A must-have solution to create forms for booking the appointments",
         "find": { 
-            "name": "ApiWpJson"
+            "name": "ApiWpJson", 
+            "data": {
+                "queryUrl": "jet-engine/v2/appointments-list"
+            } 
         }
     },
     {
