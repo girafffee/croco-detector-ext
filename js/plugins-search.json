@@ -70,7 +70,7 @@
         "find": { 
             "name": "ApiWpJson", 
             "data": {
-                "queryUrl": "jet-engine/v2/bookings-list"
+                "apiUrl": "jet-engine/v2/bookings-list"
             }
         }
     },
@@ -82,7 +82,7 @@
         "find": { 
             "name": "ApiWpJson", 
             "data": {
-                "queryUrl": "jet-engine/v2/appointments-list"
+                "apiUrl": "jet-engine/v2/appointments-list"
             } 
         }
     },
