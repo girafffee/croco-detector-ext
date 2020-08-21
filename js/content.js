@@ -11,7 +11,10 @@ class Detector {
 
         this.FIND_FUNCTION = 'find';
         this.SET_STORAGE_FUNCTION = 'storage';
+        this.SET_STORAGE_FOR_EACH_FUNCTION = 'storageForEach';
+
         this.STORAGE_TYPE_PREFIX = 'storage_';
+        this.SET_STORAGE_FOR_EACH_TYPE_PREFIX = 'storageForEach_';
 
     }
 
@@ -44,6 +47,10 @@ class Detector {
         //Object.keys(this.pluginsByTypes).forEach( type => {
             
         this.setDataForType( this.callBy(this.SET_STORAGE_FUNCTION) );
+
+        this.pluginsByMethod.forEach( plugin => {
+            this.setDataForEach( this.callBy(this.SET_STORAGE_FOR_EACH_FUNCTION, ) )
+        } );
             
         this.callBy( this.FIND_FUNCTION, [
             this.pluginsByMethod,
@@ -63,6 +70,12 @@ class Detector {
         this[ this.STORAGE_TYPE_PREFIX + this.method ] = data;
     }
 
+    setDataForEach( data = "", plugin = "" ) {
+        if ( ! this.method ) return;
+
+        this[ this.SET_STORAGE_FOR_EACH_TYPE_PREFIX + plugin ] = data;
+    }
+
     getStorage() {
         if ( ! this.method ) return;
 
@@ -74,8 +87,8 @@ class Detector {
 
         if (typeof this[ callback ] === "function") 
             return this[ callback ].call(this, ...args );
-        else 
-            console.warn( `Please add function: Detector.${ callback }` ); 
+        // else 
+        //     console.warn( `Please add function: Detector.${ callback }` ); 
     }
 
     // url can be: http://ld.crocoblock.com/testing/?p=502
@@ -92,7 +105,7 @@ class Detector {
                 ) 
             :   (
                     ( ~ ( feedlink ).indexOf( 'feed' ) ) 
-                        ? feedlink.split('feed') 
+                        ? feedlink.split('feed')[0] 
                         : "" 
                 );
     }
@@ -185,6 +198,18 @@ class ApiWpJson extends Detector {
         return success;
     }
 }
+
+class ApiWpJsonRoute extends Detector {
+
+    constructor( data, method ) {
+        super( data, method );    
+    }
+
+    storageForEach ( searchPlugins ) {
+        
+    }
+}
+
 
 class SelectorDom extends Detector {
     constructor( data, method ) {
